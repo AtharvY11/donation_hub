@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Choose Your Donation - Smart Donation Hub</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', -apple-system, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* Animated Background Elements */
+body::before {
+    content: '';
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    top: -150px;
+    right: -150px;
+    animation: float 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    bottom: -100px;
+    left: -100px;
+    animation: float 10s ease-in-out infinite reverse;
+    pointer-events: none;
+}
+
+@keyframes float {
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg); 
+    }
+    50% { 
+        transform: translateY(-25px) rotate(5deg); 
+    }
+}
+
+/* Main Container */
+.form-box {
+    width: 100%;
+    max-width: 550px;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    padding: 50px 45px;
+    border-radius: 30px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    animation: slideUp 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    margin: 20px auto;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Decorative Top Border */
+.form-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+    background-size: 200% 100%;
+    border-radius: 30px 30px 0 0;
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Header Icon */
+.header-icon {
+    font-size: 70px;
+    margin-bottom: 20px;
+    animation: bounce 2s ease-in-out infinite;
+    display: inline-block;
+    filter: drop-shadow(0 5px 15px rgba(102, 126, 234, 0.3));
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Title */
+.form-box h2 {
+    margin-bottom: 12px;
+    color: #1e293b;
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Subtitle */
+.form-box p {
+    color: #64748b;
+    margin-bottom: 40px;
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+/* Donation Cards Container */
+.donate-box {
+    display: grid;
+    gap: 18px;
+    margin-bottom: 35px;
+}
+
+/* Individual Donation Card */
+.donate-box a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 22px 28px;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    color: #1e293b;
+    text-decoration: none;
+    border-radius: 18px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid transparent;
+    overflow: hidden;
+}
+
+.donate-box a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+    transition: left 0.6s;
+}
+
+.donate-box a:hover::before {
+    left: 100%;
+}
+
+.donate-box a:hover {
+    transform: translateX(8px) translateY(-4px);
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.3);
+    border-color: rgba(102, 126, 234, 0.4);
+}
+
+/* Icon in card */
+.donate-icon {
+    font-size: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 65px;
+    height: 65px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.donate-box a:hover .donate-icon {
+    transform: scale(1.15) rotate(5deg);
+}
+
+/* Card Text */
+.donate-text {
+    flex: 1;
+    text-align: left;
+}
+
+.donate-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.donate-desc {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #64748b;
+}
+
+/* Arrow Icon */
+.arrow-icon {
+    font-size: 24px;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.donate-box a:hover .arrow-icon {
+    opacity: 1;
+    transform: translateX(5px);
+}
+
+/* Color variants for each card */
+.donate-box a:nth-child(1):hover {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-color: #f59e0b;
+}
+
+.donate-box a:nth-child(2):hover {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    border-color: #ef4444;
+}
+
+.donate-box a:nth-child(3):hover {
+    background: linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%);
+    border-color: #8b5cf6;
+}
+
+.donate-box a:nth-child(4):hover {
+    background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 100%);
+    border-color: #14b8a6;
+}
+
+/* Footer Text */
+.footer-text {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 2px solid #e2e8f0;
+    font-size: 0.95rem;
+    color: #64748b;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+.footer-text .heart {
+    display: inline-block;
+    animation: heartbeat 1.5s ease-in-out infinite;
+    color: #ef4444;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    10%, 30% { transform: scale(1.15); }
+    20% { transform: scale(0.95); }
+}
+
+/* Back Button */
+.back-btn {
+    position: fixed;
+    top: 25px;
+    left: 25px;
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50px;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    z-index: 100;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.35);
+    transform: translateX(-5px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 30px 15px;
+    }
+    
+    .form-box {
+        padding: 40px 30px;
+        max-width: 95%;
+    }
+    
+    .form-box h2 {
+        font-size: 1.8rem;
+    }
+    
+    .header-icon {
+        font-size: 60px;
+    }
+    
+    .donate-box a {
+        padding: 18px 20px;
+        gap: 15px;
+    }
+    
+    .donate-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 36px;
+    }
+    
+    .donate-title {
+        font-size: 1rem;
+    }
+    
+    .donate-desc {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 20px 10px;
+    }
+    
+    .form-box {
+        padding: 35px 25px;
+    }
+    
+    .form-box h2 {
+        font-size: 1.5rem;
+    }
+    
+    .form-box p {
+        font-size: 0.95rem;
+        margin-bottom: 30px;
+    }
+    
+    .donate-box a {
+        padding: 16px 18px;
+        gap: 12px;
+    }
+    
+    .donate-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 32px;
+    }
+    
+    .donate-title {
+        font-size: 0.95rem;
+    }
+    
+    .donate-desc {
+        font-size: 0.75rem;
+    }
+    
+    .back-btn {
+        top: 15px;
+        left: 15px;
+        padding: 10px 18px;
+        font-size: 13px;
+    }
+}
+
+/* Small screen height adjustment */
+@media (max-height: 700px) {
+    body {
+        padding: 20px;
+    }
+    
+    .form-box {
+        padding: 30px 35px;
+    }
+    
+    .header-icon {
+        font-size: 50px;
+        margin-bottom: 15px;
+    }
+    
+    .form-box h2 {
+        font-size: 1.6rem;
+        margin-bottom: 8px;
+    }
+    
+    .form-box p {
+        margin-bottom: 25px;
+    }
+    
+    .donate-box {
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+    
+    .donate-box a {
+        padding: 16px 20px;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- Back Button -->
+<a href="javascript:history.back()" class="back-btn">
+    <span>←</span> Back
+</a>
+
+<div class="form-box">
+    <div class="header-icon">🎁</div>
+    <h2>Choose <span class="gradient-text">Your Donation</span></h2>
+    <p>Select a category to make your contribution and create impact</p>
+    
+    <div class="donate-box">
+        <a href="{% url 'food_donate' %}">
+            <div class="donate-icon">🍚</div>
+            <div class="donate-text">
+                <div class="donate-title">Food Donation</div>
+                <div class="donate-desc">Share meals with those in need</div>
+            </div>
+            <div class="arrow-icon">→</div>
+        </a>
+        
+        <a href="{% url 'blood_donate' %}">
+            <div class="donate-icon">🩸</div>
+            <div class="donate-text">
+                <div class="donate-title">Blood Donation</div>
+                <div class="donate-desc">Save lives with your blood</div>
+            </div>
+            <div class="arrow-icon">→</div>
+        </a>
+        
+        <a href="{% url 'clothes_donate' %}">
+            <div class="donate-icon">👕</div>
+            <div class="donate-text">
+                <div class="donate-title">Clothes Donation</div>
+                <div class="donate-desc">Provide warmth and dignity</div>
+            </div>
+            <div class="arrow-icon">→</div>
+        </a>
+        
+        <a href="{% url 'books_donate' %}">
+            <div class="donate-icon">📚</div>
+            <div class="donate-text">
+                <div class="donate-title">Books Donation</div>
+                <div class="donate-desc">Spread knowledge and learning</div>
+            </div>
+            <div class="arrow-icon">→</div>
+        </a>
+    </div>
+    
+    <div class="footer-text">
+        Your small help can make a big difference <span class="heart">❤️</span>
+    </div>
+</div>
+
+</body>
+</html>
